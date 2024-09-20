@@ -1,0 +1,25 @@
+{
+  "extends": "expo/tsconfig.base",
+  "compilerOptions": {
+    "strict": true,
+
+    "target": "esnext", // or "es5"
+    "module": "commonjs", // or "esnext"
+    "jsx": "react", // or "react-jsx" for React 17+
+    "esModuleInterop": true, // Allows default imports from modules with no default export
+    "skipLibCheck": true, // Optional: Skips type checking of declaration files
+    
+
+    "paths": {
+      "@/*": [
+        "./*"
+      ]
+    }
+  },
+  "include": [
+    "**/*.ts",
+    "**/*.tsx",
+    ".expo/types/**/*.ts",
+    "expo-env.d.ts"
+  ]
+}
