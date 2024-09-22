@@ -10,7 +10,7 @@ import { VerticalSlider } from "./VerticalSlider";
 interface VideoItem {
   id: number;
   urls: {
-    mp4: string,
+    mp4: string;
   };
 }
 
@@ -18,26 +18,18 @@ interface VideoItem {
 interface RouteParams {
   indexData?: number;
 }
-const { height } = Dimensions.get('window');
+const { height } = Dimensions.get("window");
 
 const VideoDetail: React.FC = () => {
   const route = useRoute();
- const {indexData}=route?.params||0
-  
+  const { indexData } = route?.params || 0;
   const { videoList } = useSelector((state: any) => state.videoReducer);
-
-
-
 
   return (
     <SafeAreaView style={[styles.safeArea, { height: height }]}>
-      <VerticalSlider
-        items={videoList}
-        currentIdx={indexData}
-      />
+      <VerticalSlider items={videoList} currentIdx={indexData} />
     </SafeAreaView>
-
   );
-}
+};
 
 export default VideoDetail;

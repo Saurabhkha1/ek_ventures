@@ -1,11 +1,10 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import { ResizeMode } from "react-native-video";
 import { View, Text, TouchableOpacity } from "react-native";
 import VideoPlayer from "expo-video-player";
 
 import { LIKE, COMMENTS, MORE, VIDEOICON } from "@/assets/svg";
 
-import { useIsFocused } from "@react-navigation/native";
 import strings from "@/constants/Strings";
 import styles from "./styles";
 import { ms } from "@/utils/scalling";
@@ -19,23 +18,10 @@ interface VideoItemProps {
   };
   index?: number;
   currentIndex?: number;
+  shouldPlay:boolean
 }
 
-const VideoItem: React.FC<VideoItemProps> = ({ item, index, currentIndex }) => {
-  const isFocused = useIsFocused();
-  const [shouldPlay, setShouldPlay] = useState<boolean>(true);
-
-
-
-  useEffect(() => {
-    if (!isFocused) {
-      setShouldPlay(false);
-    } else {
-    
-      setShouldPlay(true);
-    }
-  }, [isFocused]);
-
+const VideoItem: React.FC<VideoItemProps> = ({ item, index, currentIndex,shouldPlay }) => { 
   return (
     <View style={[styles.container]}>
       <View style={styles.mediaHeaderStyle}>

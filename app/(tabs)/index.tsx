@@ -43,7 +43,7 @@ export default function HomeScreen() {
   const videoRef = useRef<VideoRef>(null);
 
   useEffect(() => {
-    dispatch(requestFetchVideo());
+   dispatch(requestFetchVideo());
   }, []);
 
   return (
