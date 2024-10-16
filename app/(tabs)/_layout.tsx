@@ -211,7 +211,7 @@ export default function TabLayout() {
 
 const styles = StyleSheet.create({
   tabsStyle: {
-    height: ms(60),
+    height: ms(82),
     width: "100%",
     borderTopColor: "#ccc",
   },
@@ -221,6 +221,7 @@ const styles = StyleSheet.create({
 
   tabBarBagStyle: {
     backgroundColor: Colors.SLATE_GRAY,
+ 
   },
   labelColorStyle: { color: Colors.WHITE },
   labelStyle: {

@@ -3,7 +3,7 @@ import { Dimensions, StyleSheet, TextStyle, ViewStyle } from "react-native";
 import { Colors } from "@/constants/Colors";
 import { fonts, FontSize } from "@/assets/fonts";
 import { ms } from "@/utils/scalling";
-const { height } = Dimensions.get("window");
+const { height,width } = Dimensions.get("window");
 
 interface styles {
   safeArea: ViewStyle;
@@ -43,6 +43,8 @@ const styles = StyleSheet.create({
     zIndex: 1,
     flexDirection: "row",
     marginHorizontal: ms(20),
+  
+
   },
   mediaLableStyle: {
     flex: 1,
@@ -50,5 +52,6 @@ const styles = StyleSheet.create({
     fontSize: FontSize.F23,
     fontFamily: fonts.SemiBold,
   },
+  videoPlayerStyle:{width:width,height:height,videoBackgroundColor:Colors.DARK_GRAY, controlsBackgroundColor:Colors.ALMOST_BLACK }
 });
 export default styles;

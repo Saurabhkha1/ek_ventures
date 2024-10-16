@@ -31,4 +31,6 @@ export const Colors = {
   SLATE_GRAY: "#151313",
   GRAY: "#C9CCD1",
   PITCH_BLACK: "#0A0A0A",
+DARK_GRAY :'#141414',
+ ALMOST_BLACK : '#020202'
 };

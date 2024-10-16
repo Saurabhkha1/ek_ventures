@@ -8,6 +8,7 @@ import {
   FlatList,
   ScrollView,
   Platform,
+  LogBox,
 } from "react-native";
 import { ResizeMode } from "expo-av";
 import VideoPlayer from "expo-video-player";
@@ -41,11 +42,15 @@ export default function HomeScreen() {
   const dispatch = useDispatch();
   const navigation = useNavigation();
   const videoRef = useRef<VideoRef>(null);
-
+  LogBox.ignoreLogs([
+    "Support for defaultProps will be removed from function components",
+  ]); // Ignore specific warning
+  LogBox.ignoreAllLogs();
   useEffect(() => {
-   dispatch(requestFetchVideo());
+    dispatch(requestFetchVideo());
   }, []);
 
+ 
   return (
     <SafeAreaView style={styles.container}>
       <ScrollView style={styles.scrollViewStyle}>
@@ -74,7 +79,6 @@ export default function HomeScreen() {
 
           {/* large font title card */}
 
-         
           <TitleCard
             title={strings.large_font_title}
             subTitle={strings.sub_title}
@@ -82,7 +86,7 @@ export default function HomeScreen() {
             rightIcon={<ARROW_RIGHT width={ms(16)} height={ms(16)} />}
             onTouchablePress={() => console.log("click")}
           />
-   
+
           <View style={styles.lineStyle} />
 
           {/* Media lable View */}
@@ -102,7 +106,10 @@ export default function HomeScreen() {
                 return (
                   <TouchableOpacity
                     onPress={() =>
-                      navigation.navigate("media", { indexData: index,id:item.id })
+                      navigation.navigate("media", {
+                        indexData: index,
+                        id: item.id,
+                      })
                     }
                     key={item.id}
                     activeOpacity={0.7}
@@ -113,7 +120,12 @@ export default function HomeScreen() {
                         style={styles.videoPlayerStyle}
                         icon={{
                           size: ms(30),
+                          color: "white",
                         }}
+                        errorCallback={() => {}}
+                        playbackCallback={() => {}}
+                        autoHidePlayer={true}
+                        mute={{}}
                         slider={{ visible: false }}
                         timeVisible={false}
                         fullscreen={{ visible: false }}
@@ -126,6 +138,8 @@ export default function HomeScreen() {
                           },
                         }}
                       />
+
+                      {/* <MyVideoPlayer/> */}
                     </View>
                   </TouchableOpacity>
                 );
@@ -198,6 +212,8 @@ const styles = StyleSheet.create({
   videoPlayerStyle: {
     width: ms(170),
     height: ms(200),
+    videoBackgroundColor:"#141414",
+     controlsBackgroundColor: "transparent"
   },
   videoViewStyle: {
     borderRadius: ms(12),
@@ -211,7 +227,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
   },
 
-  shadowEfect:{
+  shadowEfect: {
     ...Platform.select({
       ios: {
         shadowColor: "#000",
@@ -224,6 +240,7 @@ const styles = StyleSheet.create({
       },
       android: {
         elevation: 8, // Increased elevation for better visibility
-      }
-  })}
+      },
+    }),
+  },
 });

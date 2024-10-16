@@ -65,8 +65,7 @@ const styles = StyleSheet.create({
   content: {
     flexDirection: "column",
      //height: ITEM_HEIGHT * items.length, // Make space for all items
-   height: ITEM_HEIGHT, // Make space
-
+   height: ITEM_HEIGHT+ms(80), // Make space
   },
 
   item: {

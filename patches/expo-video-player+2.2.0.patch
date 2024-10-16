@@ -1,0 +1,1167 @@
+diff --git a/node_modules/expo-video-player/dist/index.d.ts b/node_modules/expo-video-player/dist/index.d.ts
+index 04be579..6ca693e 100644
+--- a/node_modules/expo-video-player/dist/index.d.ts
++++ b/node_modules/expo-video-player/dist/index.d.ts
+@@ -1,55 +1,104 @@
++// import { AVPlaybackStatus } from 'expo-av';
++// import { Props } from './props';
++// import React from 'react';
++// declare const VideoPlayer: {
++//     (tempProps: Props): JSX.Element;
++//     defaultProps: {
++//         errorCallback: (error: import("./constants").ErrorType) => void;
++//         playbackCallback: (status: AVPlaybackStatus) => void;
++//         defaultControlsVisible: boolean;
++//         timeVisible: boolean;
++//         textStyle: import("react-native").TextStyle;
++//         slider: {
++//             visible?: boolean | undefined;
++//         } & import("@react-native-community/slider").SliderProps;
++//         activityIndicator: import("react-native").ActivityIndicatorProps;
++//         animation: {
++//             fadeInDuration?: number | undefined;
++//             fadeOutDuration?: number | undefined;
++//         };
++//         header: React.ReactNode;
++//         style: {
++//             width?: number | undefined;
++//             height?: number | undefined;
++//             videoBackgroundColor?: import("react-native").ColorValue | undefined;
++//             controlsBackgroundColor?: import("react-native").ColorValue | undefined;
++//         };
++//         icon: {
++//             size?: number | undefined;
++//             color?: import("react-native").ColorValue | undefined;
++//             style?: import("react-native").TextStyle | undefined;
++//             pause?: JSX.Element | undefined;
++//             play?: JSX.Element | undefined;
++//             replay?: JSX.Element | undefined;
++//             loading?: JSX.Element | undefined;
++//             fullscreen?: JSX.Element | undefined;
++//             exitFullscreen?: JSX.Element | undefined;
++//             mute?: JSX.Element | undefined;
++//             exitMute?: JSX.Element | undefined;
++//         };
++//         fullscreen: {
++//             enterFullscreen?: (() => void) | undefined;
++//             exitFullscreen?: (() => void) | undefined;
++//             inFullscreen?: boolean | undefined;
++//             visible?: boolean | undefined;
++//         };
++//         autoHidePlayer: boolean;
++//         mute: {
++//             enterMute?: (() => void) | undefined;
++//             exitMute?: (() => void) | undefined;
++//             isMute?: boolean | undefined;
++//             visible?: boolean | undefined;
++//         };
++//     };
++// };
++// export default VideoPlayer;
++
+ import { AVPlaybackStatus } from 'expo-av';
+ import { Props } from './props';
+ import React from 'react';
+-declare const VideoPlayer: {
+-    (tempProps: Props): JSX.Element;
+-    defaultProps: {
+-        errorCallback: (error: import("./constants").ErrorType) => void;
+-        playbackCallback: (status: AVPlaybackStatus) => void;
+-        defaultControlsVisible: boolean;
+-        timeVisible: boolean;
+-        textStyle: import("react-native").TextStyle;
+-        slider: {
+-            visible?: boolean | undefined;
+-        } & import("@react-native-community/slider").SliderProps;
+-        activityIndicator: import("react-native").ActivityIndicatorProps;
+-        animation: {
+-            fadeInDuration?: number | undefined;
+-            fadeOutDuration?: number | undefined;
+-        };
+-        header: React.ReactNode;
+-        style: {
+-            width?: number | undefined;
+-            height?: number | undefined;
+-            videoBackgroundColor?: import("react-native").ColorValue | undefined;
+-            controlsBackgroundColor?: import("react-native").ColorValue | undefined;
+-        };
+-        icon: {
+-            size?: number | undefined;
+-            color?: import("react-native").ColorValue | undefined;
+-            style?: import("react-native").TextStyle | undefined;
+-            pause?: JSX.Element | undefined;
+-            play?: JSX.Element | undefined;
+-            replay?: JSX.Element | undefined;
+-            loading?: JSX.Element | undefined;
+-            fullscreen?: JSX.Element | undefined;
+-            exitFullscreen?: JSX.Element | undefined;
+-            mute?: JSX.Element | undefined;
+-            exitMute?: JSX.Element | undefined;
+-        };
+-        fullscreen: {
+-            enterFullscreen?: (() => void) | undefined;
+-            exitFullscreen?: (() => void) | undefined;
+-            inFullscreen?: boolean | undefined;
+-            visible?: boolean | undefined;
+-        };
+-        autoHidePlayer: boolean;
+-        mute: {
+-            enterMute?: (() => void) | undefined;
+-            exitMute?: (() => void) | undefined;
+-            isMute?: boolean | undefined;
+-            visible?: boolean | undefined;
+-        };
+-    };
++
++const VideoPlayer = ({
++    errorCallback = (error) => console.error(error), // Provide a default error handler
++    playbackCallback = (status) => console.log(status), // Provide a default playback handler
++    defaultControlsVisible = true,
++    timeVisible = true,
++    textStyle = {},
++    slider = { visible: true },
++    activityIndicator = {},
++    animation = { fadeInDuration: 300, fadeOutDuration: 300 },
++    header = null,
++    style = { width: '100%', height: 300,  videoBackgroundColor?: import("react-native").ColorValue | undefined, controlsBackgroundColor: '#fff' },
++    icon = {
++        size: 24,
++        color: '#000',
++        style: {},
++        pause: null,
++        play: null,
++        replay: null,
++        loading: null,
++        fullscreen: null,
++        exitFullscreen: null,
++        mute: null,
++        exitMute: null,
++    },
++    fullscreen = {
++        enterFullscreen: () => {},
++        exitFullscreen: () => {},
++        inFullscreen: false,
++        visible: true,
++    },
++    autoHidePlayer = true,
++    mute = {
++        enterMute: () => {},
++        exitMute: () => {},
++        isMute: false,
++        visible: true,
++    },
++}: Props): JSX.Element => {
++    // Component logic here...
++
++   
+ };
++
+ export default VideoPlayer;
+diff --git a/node_modules/expo-video-player/dist/index.js b/node_modules/expo-video-player/dist/index.js
+index 82df4b4..ed6eca6 100644
+--- a/node_modules/expo-video-player/dist/index.js
++++ b/node_modules/expo-video-player/dist/index.js
+@@ -1,268 +1,572 @@
++// import { __awaiter, __rest } from "tslib";
++// import { Audio, Video } from 'expo-av';
++// import { ActivityIndicator, Animated, StyleSheet, Text, TouchableWithoutFeedback, View, } from 'react-native';
++// import { ControlStates, ErrorSeverity, PlaybackStates } from './constants';
++// import { ErrorMessage, TouchableButton, deepMerge, getMinutesSecondsFromMilliseconds, styles, } from './utils';
++// import { MaterialIcons } from '@expo/vector-icons';
++// import { defaultProps } from './props';
++// import { useEffect, useRef, useState } from 'react';
++// import React from 'react';
++// import Slider from '@react-native-community/slider';
++// const VideoPlayer = (tempProps) => {
++//     const props = deepMerge(defaultProps, tempProps);
++//     let playbackInstance = null;
++//     let controlsTimer = null;
++//     let initialShow = props.defaultControlsVisible;
++//     const header = props.header;
++//     const [errorMessage, setErrorMessage] = useState('');
++//     const controlsOpacity = useRef(new Animated.Value(props.defaultControlsVisible ? 1 : 0)).current;
++//     const [controlsState, setControlsState] = useState(props.defaultControlsVisible ? ControlStates.Visible : ControlStates.Hidden);
++//     const [playbackInstanceInfo, setPlaybackInstanceInfo] = useState({
++//         position: 0,
++//         duration: 0,
++//         state: props.videoProps.source ? PlaybackStates.Loading : PlaybackStates.Error,
++//     });
++//     // We need to extract ref, because of misstypes in <Slider />
++//     // eslint-disable-next-line @typescript-eslint/no-unused-vars
++//     const _a = props.slider, { ref: sliderRef } = _a, sliderProps = __rest(_a, ["ref"]);
++//     const screenRatio = props.style.width / props.style.height;
++//     let videoHeight = props.style.height;
++//     let videoWidth = videoHeight * screenRatio;
++//     if (videoWidth > props.style.width) {
++//         videoWidth = props.style.width;
++//         videoHeight = videoWidth / screenRatio;
++//     }
++//     useEffect(() => {
++//         setAudio();
++//         return () => {
++//             if (playbackInstance) {
++//                 playbackInstance.setStatusAsync({
++//                     shouldPlay: false,
++//                 });
++//             }
++//         };
++//     }, []);
++//     useEffect(() => {
++//         if (!props.videoProps.source) {
++//             console.error('[VideoPlayer] `Source` is a required in `videoProps`. ' +
++//                 'Check https://docs.expo.io/versions/latest/sdk/video/#usage');
++//             setErrorMessage('`Source` is a required in `videoProps`');
++//             setPlaybackInstanceInfo(Object.assign(Object.assign({}, playbackInstanceInfo), { state: PlaybackStates.Error }));
++//         }
++//         else {
++//             setPlaybackInstanceInfo(Object.assign(Object.assign({}, playbackInstanceInfo), { state: PlaybackStates.Playing }));
++//         }
++//     }, [props.videoProps.source]);
++//     const hideAnimation = () => {
++//         Animated.timing(controlsOpacity, {
++//             toValue: 0,
++//             duration: props.animation.fadeOutDuration,
++//             useNativeDriver: true,
++//         }).start(({ finished }) => {
++//             if (finished) {
++//                 setControlsState(ControlStates.Hidden);
++//             }
++//         });
++//     };
++//     const animationToggle = () => {
++//         if (controlsState === ControlStates.Hidden) {
++//             Animated.timing(controlsOpacity, {
++//                 toValue: 1,
++//                 duration: props.animation.fadeInDuration,
++//                 useNativeDriver: true,
++//             }).start(({ finished }) => {
++//                 if (finished) {
++//                     setControlsState(ControlStates.Visible);
++//                 }
++//             });
++//         }
++//         else if (controlsState === ControlStates.Visible) {
++//             hideAnimation();
++//         }
++//         if (controlsTimer === null && props.autoHidePlayer) {
++//             controlsTimer = setTimeout(() => {
++//                 if (playbackInstanceInfo.state === PlaybackStates.Playing &&
++//                     controlsState === ControlStates.Hidden) {
++//                     hideAnimation();
++//                 }
++//                 if (controlsTimer) {
++//                     clearTimeout(controlsTimer);
++//                 }
++//                 controlsTimer = null;
++//             }, 2000);
++//         }
++//     };
++//     // Set audio mode to play even in silent mode (like the YouTube app)
++//     const setAudio = () => __awaiter(void 0, void 0, void 0, function* () {
++//         try {
++//             yield Audio.setAudioModeAsync({
++//                 playsInSilentModeIOS: true,
++//             });
++//         }
++//         catch (e) {
++//             props.errorCallback({
++//                 type: ErrorSeverity.NonFatal,
++//                 message: 'Audio.setAudioModeAsync',
++//                 obj: e,
++//             });
++//         }
++//     });
++//     const updatePlaybackCallback = (status) => {
++//         props.playbackCallback(status);
++//         if (status.isLoaded) {
++//             setPlaybackInstanceInfo(Object.assign(Object.assign({}, playbackInstanceInfo), { position: status.positionMillis, duration: status.durationMillis || 0, state: status.positionMillis === status.durationMillis
++//                     ? PlaybackStates.Ended
++//                     : status.isBuffering
++//                         ? PlaybackStates.Buffering
++//                         : status.shouldPlay
++//                             ? PlaybackStates.Playing
++//                             : PlaybackStates.Paused }));
++//             if ((status.didJustFinish && controlsState === ControlStates.Hidden) ||
++//                 (status.isBuffering && controlsState === ControlStates.Hidden && initialShow)) {
++//                 animationToggle();
++//                 initialShow = false;
++//             }
++//         }
++//         else {
++//             if (status.isLoaded === false && status.error) {
++//                 const errorMsg = `Encountered a fatal error during playback: ${status.error}`;
++//                 setErrorMessage(errorMsg);
++//                 props.errorCallback({ type: ErrorSeverity.Fatal, message: errorMsg, obj: {} });
++//             }
++//         }
++//     };
++//     const togglePlay = () => __awaiter(void 0, void 0, void 0, function* () {
++//         if (controlsState === ControlStates.Hidden) {
++//             return;
++//         }
++//         const shouldPlay = playbackInstanceInfo.state !== PlaybackStates.Playing;
++//         if (playbackInstance !== null) {
++//             yield playbackInstance.setStatusAsync(Object.assign({ shouldPlay }, (playbackInstanceInfo.state === PlaybackStates.Ended && { positionMillis: 0 })));
++//             setPlaybackInstanceInfo(Object.assign(Object.assign({}, playbackInstanceInfo), { state: playbackInstanceInfo.state === PlaybackStates.Playing
++//                     ? PlaybackStates.Paused
++//                     : PlaybackStates.Playing }));
++//             if (shouldPlay) {
++//                 animationToggle();
++//             }
++//         }
++//     });
++//     if (playbackInstanceInfo.state === PlaybackStates.Error) {
++//         return (<View style={{
++//                 backgroundColor: props.style.videoBackgroundColor,
++//                 width: videoWidth,
++//                 height: videoHeight,
++//             }}>
++//         <ErrorMessage style={props.textStyle} message={errorMessage}/>
++//       </View>);
++//     }
++//     if (playbackInstanceInfo.state === PlaybackStates.Loading) {
++//         return (<View style={{
++//                 backgroundColor: props.style.controlsBackgroundColor,
++//                 width: videoWidth,
++//                 height: videoHeight,
++//                 justifyContent: 'center',
++//             }}>
++//         {props.icon.loading || <ActivityIndicator {...props.activityIndicator}/>}
++//       </View>);
++//     }
++//     return (<View style={{
++//             backgroundColor: props.style.videoBackgroundColor,
++//             width: videoWidth,
++//             height: videoHeight,
++//             maxWidth: '100%',
++//         }}>
++//       <Video style={styles.videoWrapper} {...props.videoProps} ref={component => {
++//             playbackInstance = component;
++//             if (props.videoProps.ref) {
++//                 props.videoProps.ref.current = component;
++//             }
++//         }} onPlaybackStatusUpdate={updatePlaybackCallback}/>
++
++//       <Animated.View pointerEvents={controlsState === ControlStates.Visible ? 'auto' : 'none'} style={[
++//             styles.topInfoWrapper,
++//             {
++//                 opacity: controlsOpacity,
++//             },
++//         ]}>
++//         {header}
++//       </Animated.View>
++
++//       <TouchableWithoutFeedback onPress={animationToggle}>
++//         <Animated.View style={Object.assign(Object.assign({}, StyleSheet.absoluteFillObject), { opacity: controlsOpacity, justifyContent: 'center', alignItems: 'center' })}>
++//           <View style={Object.assign(Object.assign({}, StyleSheet.absoluteFillObject), { backgroundColor: props.style.controlsBackgroundColor, opacity: 0.5 })}/>
++//           <View pointerEvents={controlsState === ControlStates.Visible ? 'auto' : 'none'}>
++//             <View style={styles.iconWrapper}>
++//               <TouchableButton onPress={togglePlay}>
++//                 <View>
++//                   {playbackInstanceInfo.state === PlaybackStates.Buffering &&
++//             (props.icon.loading || <ActivityIndicator {...props.activityIndicator}/>)}
++//                   {playbackInstanceInfo.state === PlaybackStates.Playing && props.icon.pause}
++//                   {playbackInstanceInfo.state === PlaybackStates.Paused && props.icon.play}
++//                   {playbackInstanceInfo.state === PlaybackStates.Ended && props.icon.replay}
++//                   {((playbackInstanceInfo.state === PlaybackStates.Ended && !props.icon.replay) ||
++//             (playbackInstanceInfo.state === PlaybackStates.Playing && !props.icon.pause) ||
++//             (playbackInstanceInfo.state === PlaybackStates.Paused &&
++//                 !props.icon.pause)) && (<MaterialIcons name={playbackInstanceInfo.state === PlaybackStates.Playing
++//                 ? 'pause'
++//                 : playbackInstanceInfo.state === PlaybackStates.Paused
++//                     ? 'play-arrow'
++//                     : 'replay'} style={props.icon.style} size={props.icon.size} color={props.icon.color}/>)}
++//                 </View>
++//               </TouchableButton>
++//             </View>
++//           </View>
++//         </Animated.View>
++//       </TouchableWithoutFeedback>
++
++//       <Animated.View pointerEvents={controlsState === ControlStates.Visible ? 'auto' : 'none'} style={[
++//             styles.bottomInfoWrapper,
++//             {
++//                 opacity: controlsOpacity,
++//             },
++//         ]}>
++//         {props.timeVisible && (<Text style={[props.textStyle, styles.timeLeft]}>
++//             {getMinutesSecondsFromMilliseconds(playbackInstanceInfo.position)}
++//           </Text>)}
++//         {props.slider.visible && (<Slider {...sliderProps} style={[styles.slider, props.slider.style]} value={playbackInstanceInfo.duration
++//                 ? playbackInstanceInfo.position / playbackInstanceInfo.duration
++//                 : 0} onSlidingStart={() => {
++//                 if (playbackInstanceInfo.state === PlaybackStates.Playing) {
++//                     togglePlay();
++//                     setPlaybackInstanceInfo(Object.assign(Object.assign({}, playbackInstanceInfo), { state: PlaybackStates.Paused }));
++//                 }
++//             }} onSlidingComplete={(e) => __awaiter(void 0, void 0, void 0, function* () {
++//                 const position = e * playbackInstanceInfo.duration;
++//                 if (playbackInstance) {
++//                     yield playbackInstance.setStatusAsync({
++//                         positionMillis: position,
++//                         shouldPlay: true,
++//                     });
++//                 }
++//                 setPlaybackInstanceInfo(Object.assign(Object.assign({}, playbackInstanceInfo), { position }));
++//             })}/>)}
++//         {props.timeVisible && (<Text style={[props.textStyle, styles.timeRight]}>
++//             {getMinutesSecondsFromMilliseconds(playbackInstanceInfo.duration)}
++//           </Text>)}
++//         {props.mute.visible && (<TouchableButton onPress={() => { var _a, _b, _c, _d; return (props.mute.isMute ? (_b = (_a = props.mute).exitMute) === null || _b === void 0 ? void 0 : _b.call(_a) : (_d = (_c = props.mute).enterMute) === null || _d === void 0 ? void 0 : _d.call(_c)); }}>
++//             <View>
++//               {props.icon.mute}
++//               {props.icon.exitMute}
++//               {((!props.icon.mute && props.mute.isMute) ||
++//                 (!props.icon.exitMute && !props.mute.isMute)) && (<MaterialIcons name={props.mute.isMute ? 'volume-up' : 'volume-off'} style={props.icon.style} size={props.icon.size / 2} color={props.icon.color}/>)}
++//             </View>
++//           </TouchableButton>)}
++//         {props.fullscreen.visible && (<TouchableButton onPress={() => props.fullscreen.inFullscreen
++//                 ? props.fullscreen.exitFullscreen()
++//                 : props.fullscreen.enterFullscreen()}>
++//             <View>
++//               {!props.fullscreen.inFullscreen && props.icon.fullscreen}
++//               {props.fullscreen.inFullscreen && props.icon.exitFullscreen}
++//               {((!props.icon.fullscreen && !props.fullscreen.inFullscreen) ||
++//                 (!props.icon.exitFullscreen && props.fullscreen.inFullscreen)) && (<MaterialIcons name={props.fullscreen.inFullscreen ? 'fullscreen-exit' : 'fullscreen'} style={props.icon.style} size={props.icon.size / 2} color={props.icon.color}/>)}
++//             </View>
++//           </TouchableButton>)}
++//       </Animated.View>
++//     </View>);
++// };
++// VideoPlayer.defaultProps = defaultProps;
++// export default VideoPlayer;
++
+ import { __awaiter, __rest } from "tslib";
+ import { Audio, Video } from 'expo-av';
+-import { ActivityIndicator, Animated, StyleSheet, Text, TouchableWithoutFeedback, View, } from 'react-native';
++import { ActivityIndicator, Animated, StyleSheet, Text, TouchableWithoutFeedback, View } from 'react-native';
+ import { ControlStates, ErrorSeverity, PlaybackStates } from './constants';
+-import { ErrorMessage, TouchableButton, deepMerge, getMinutesSecondsFromMilliseconds, styles, } from './utils';
++import { ErrorMessage, TouchableButton, deepMerge, getMinutesSecondsFromMilliseconds, styles } from './utils';
+ import { MaterialIcons } from '@expo/vector-icons';
+-import { defaultProps } from './props';
+ import { useEffect, useRef, useState } from 'react';
+ import React from 'react';
+ import Slider from '@react-native-community/slider';
+-const VideoPlayer = (tempProps) => {
+-    const props = deepMerge(defaultProps, tempProps);
+-    let playbackInstance = null;
+-    let controlsTimer = null;
+-    let initialShow = props.defaultControlsVisible;
+-    const header = props.header;
+-    const [errorMessage, setErrorMessage] = useState('');
+-    const controlsOpacity = useRef(new Animated.Value(props.defaultControlsVisible ? 1 : 0)).current;
+-    const [controlsState, setControlsState] = useState(props.defaultControlsVisible ? ControlStates.Visible : ControlStates.Hidden);
+-    const [playbackInstanceInfo, setPlaybackInstanceInfo] = useState({
+-        position: 0,
+-        duration: 0,
+-        state: props.videoProps.source ? PlaybackStates.Loading : PlaybackStates.Error,
+-    });
+-    // We need to extract ref, because of misstypes in <Slider />
+-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+-    const _a = props.slider, { ref: sliderRef } = _a, sliderProps = __rest(_a, ["ref"]);
+-    const screenRatio = props.style.width / props.style.height;
+-    let videoHeight = props.style.height;
+-    let videoWidth = videoHeight * screenRatio;
+-    if (videoWidth > props.style.width) {
+-        videoWidth = props.style.width;
+-        videoHeight = videoWidth / screenRatio;
+-    }
+-    useEffect(() => {
+-        setAudio();
+-        return () => {
+-            if (playbackInstance) {
+-                playbackInstance.setStatusAsync({
+-                    shouldPlay: false,
+-                });
+-            }
+-        };
+-    }, []);
+-    useEffect(() => {
+-        if (!props.videoProps.source) {
+-            console.error('[VideoPlayer] `Source` is a required in `videoProps`. ' +
+-                'Check https://docs.expo.io/versions/latest/sdk/video/#usage');
+-            setErrorMessage('`Source` is a required in `videoProps`');
+-            setPlaybackInstanceInfo(Object.assign(Object.assign({}, playbackInstanceInfo), { state: PlaybackStates.Error }));
+-        }
+-        else {
+-            setPlaybackInstanceInfo(Object.assign(Object.assign({}, playbackInstanceInfo), { state: PlaybackStates.Playing }));
+-        }
+-    }, [props.videoProps.source]);
+-    const hideAnimation = () => {
+-        Animated.timing(controlsOpacity, {
+-            toValue: 0,
+-            duration: props.animation.fadeOutDuration,
+-            useNativeDriver: true,
+-        }).start(({ finished }) => {
+-            if (finished) {
+-                setControlsState(ControlStates.Hidden);
+-            }
+-        });
+-    };
+-    const animationToggle = () => {
+-        if (controlsState === ControlStates.Hidden) {
+-            Animated.timing(controlsOpacity, {
+-                toValue: 1,
+-                duration: props.animation.fadeInDuration,
+-                useNativeDriver: true,
+-            }).start(({ finished }) => {
+-                if (finished) {
+-                    setControlsState(ControlStates.Visible);
+-                }
+-            });
+-        }
+-        else if (controlsState === ControlStates.Visible) {
+-            hideAnimation();
+-        }
+-        if (controlsTimer === null && props.autoHidePlayer) {
+-            controlsTimer = setTimeout(() => {
+-                if (playbackInstanceInfo.state === PlaybackStates.Playing &&
+-                    controlsState === ControlStates.Hidden) {
+-                    hideAnimation();
+-                }
+-                if (controlsTimer) {
+-                    clearTimeout(controlsTimer);
+-                }
+-                controlsTimer = null;
+-            }, 2000);
+-        }
++import { Props } from './props'; // Ensure you import your Props type here
++
++const VideoPlayer = ({
++  videoProps,
++  errorCallback = (error) => console.error(error),
++  playbackCallback = (status) => console.log(status),
++  defaultControlsVisible = true,
++  timeVisible = true,
++  textStyle = {},
++  slider = { visible: true },
++  activityIndicator = {},
++  animation = { fadeInDuration: 300, fadeOutDuration: 300 },
++  header = null,
++  style = { width: '100%', height: 300, videoBackgroundColor: '#000', controlsBackgroundColor: '#fff' },
++  icon = {
++    size: 24,
++    color: '#000',
++    style: {},
++    pause: null,
++    play: null,
++    replay: null,
++    loading: null,
++    fullscreen: null,
++    exitFullscreen: null,
++    mute: null,
++    exitMute: null,
++  },
++  fullscreen = {
++    enterFullscreen: () => {},
++    exitFullscreen: () => {},
++    inFullscreen: false,
++    visible: true,
++  },
++  autoHidePlayer = true,
++  mute = {
++    enterMute: () => {},
++    exitMute: () => {},
++    isMute: false,
++    visible: true,
++  },
++}: Props) => {
++  let playbackInstance = null;
++  let controlsTimer = null;
++  let initialShow = defaultControlsVisible;
++
++  const [errorMessage, setErrorMessage] = useState('');
++  const controlsOpacity = useRef(new Animated.Value(defaultControlsVisible ? 1 : 0)).current;
++  const [controlsState, setControlsState] = useState(defaultControlsVisible ? ControlStates.Visible : ControlStates.Hidden);
++  const [playbackInstanceInfo, setPlaybackInstanceInfo] = useState({
++    position: 0,
++    duration: 0,
++    state: videoProps.source ? PlaybackStates.Loading : PlaybackStates.Error,
++  });
++
++  const _a = slider, { ref: sliderRef } = _a, sliderProps = __rest(_a, ["ref"]);
++  const screenRatio = style.width / style.height;
++  let videoHeight = style.height;
++  let videoWidth = videoHeight * screenRatio;
++
++  if (videoWidth > style.width) {
++    videoWidth = style.width;
++    videoHeight = videoWidth / screenRatio;
++  }
++
++  useEffect(() => {
++    setAudio();
++    return () => {
++      if (playbackInstance) {
++        playbackInstance.setStatusAsync({ shouldPlay: false });
++      }
+     };
+-    // Set audio mode to play even in silent mode (like the YouTube app)
+-    const setAudio = () => __awaiter(void 0, void 0, void 0, function* () {
+-        try {
+-            yield Audio.setAudioModeAsync({
+-                playsInSilentModeIOS: true,
+-            });
+-        }
+-        catch (e) {
+-            props.errorCallback({
+-                type: ErrorSeverity.NonFatal,
+-                message: 'Audio.setAudioModeAsync',
+-                obj: e,
+-            });
+-        }
++  }, []);
++
++  useEffect(() => {
++    if (!videoProps.source) {
++      console.error('[VideoPlayer] `Source` is required in `videoProps`.' +
++        ' Check https://docs.expo.io/versions/latest/sdk/video/#usage');
++      setErrorMessage('`Source` is required in `videoProps`');
++      setPlaybackInstanceInfo(prev => ({ ...prev, state: PlaybackStates.Error }));
++    } else {
++      setPlaybackInstanceInfo(prev => ({ ...prev, state: PlaybackStates.Playing }));
++    }
++  }, [videoProps.source]);
++
++  const hideAnimation = () => {
++    Animated.timing(controlsOpacity, {
++      toValue: 0,
++      duration: animation.fadeOutDuration,
++      useNativeDriver: true,
++    }).start(({ finished }) => {
++      if (finished) {
++        setControlsState(ControlStates.Hidden);
++      }
+     });
+-    const updatePlaybackCallback = (status) => {
+-        props.playbackCallback(status);
+-        if (status.isLoaded) {
+-            setPlaybackInstanceInfo(Object.assign(Object.assign({}, playbackInstanceInfo), { position: status.positionMillis, duration: status.durationMillis || 0, state: status.positionMillis === status.durationMillis
+-                    ? PlaybackStates.Ended
+-                    : status.isBuffering
+-                        ? PlaybackStates.Buffering
+-                        : status.shouldPlay
+-                            ? PlaybackStates.Playing
+-                            : PlaybackStates.Paused }));
+-            if ((status.didJustFinish && controlsState === ControlStates.Hidden) ||
+-                (status.isBuffering && controlsState === ControlStates.Hidden && initialShow)) {
+-                animationToggle();
+-                initialShow = false;
+-            }
+-        }
+-        else {
+-            if (status.isLoaded === false && status.error) {
+-                const errorMsg = `Encountered a fatal error during playback: ${status.error}`;
+-                setErrorMessage(errorMsg);
+-                props.errorCallback({ type: ErrorSeverity.Fatal, message: errorMsg, obj: {} });
+-            }
++  };
++
++  const animationToggle = () => {
++    if (controlsState === ControlStates.Hidden) {
++      Animated.timing(controlsOpacity, {
++        toValue: 1,
++        duration: animation.fadeInDuration,
++        useNativeDriver: true,
++      }).start(({ finished }) => {
++        if (finished) {
++          setControlsState(ControlStates.Visible);
+         }
+-    };
+-    const togglePlay = () => __awaiter(void 0, void 0, void 0, function* () {
+-        if (controlsState === ControlStates.Hidden) {
+-            return;
++      });
++    } else {
++      hideAnimation();
++    }
++
++    if (controlsTimer === null && autoHidePlayer) {
++      controlsTimer = setTimeout(() => {
++        if (playbackInstanceInfo.state === PlaybackStates.Playing && controlsState === ControlStates.Hidden) {
++          hideAnimation();
+         }
+-        const shouldPlay = playbackInstanceInfo.state !== PlaybackStates.Playing;
+-        if (playbackInstance !== null) {
+-            yield playbackInstance.setStatusAsync(Object.assign({ shouldPlay }, (playbackInstanceInfo.state === PlaybackStates.Ended && { positionMillis: 0 })));
+-            setPlaybackInstanceInfo(Object.assign(Object.assign({}, playbackInstanceInfo), { state: playbackInstanceInfo.state === PlaybackStates.Playing
+-                    ? PlaybackStates.Paused
+-                    : PlaybackStates.Playing }));
+-            if (shouldPlay) {
+-                animationToggle();
+-            }
++        if (controlsTimer) {
++          clearTimeout(controlsTimer);
+         }
+-    });
+-    if (playbackInstanceInfo.state === PlaybackStates.Error) {
+-        return (<View style={{
+-                backgroundColor: props.style.videoBackgroundColor,
+-                width: videoWidth,
+-                height: videoHeight,
+-            }}>
+-        <ErrorMessage style={props.textStyle} message={errorMessage}/>
+-      </View>);
++        controlsTimer = null;
++      }, 2000);
+     }
+-    if (playbackInstanceInfo.state === PlaybackStates.Loading) {
+-        return (<View style={{
+-                backgroundColor: props.style.controlsBackgroundColor,
+-                width: videoWidth,
+-                height: videoHeight,
+-                justifyContent: 'center',
+-            }}>
+-        {props.icon.loading || <ActivityIndicator {...props.activityIndicator}/>}
+-      </View>);
++  };
++
++  const setAudio = async () => {
++    try {
++      await Audio.setAudioModeAsync({ playsInSilentModeIOS: true });
++    } catch (e) {
++      errorCallback({ type: ErrorSeverity.NonFatal, message: 'Audio.setAudioModeAsync', obj: e });
+     }
+-    return (<View style={{
+-            backgroundColor: props.style.videoBackgroundColor,
+-            width: videoWidth,
+-            height: videoHeight,
+-            maxWidth: '100%',
+-        }}>
+-      <Video style={styles.videoWrapper} {...props.videoProps} ref={component => {
+-            playbackInstance = component;
+-            if (props.videoProps.ref) {
+-                props.videoProps.ref.current = component;
+-            }
+-        }} onPlaybackStatusUpdate={updatePlaybackCallback}/>
++  };
++
++  const updatePlaybackCallback = (status) => {
++    playbackCallback(status);
++    if (status.isLoaded) {
++      setPlaybackInstanceInfo(prev => ({
++        ...prev,
++        position: status.positionMillis,
++        duration: status.durationMillis || 0,
++        state: status.positionMillis === status.durationMillis
++          ? PlaybackStates.Ended
++          : status.isBuffering
++            ? PlaybackStates.Buffering
++            : status.shouldPlay
++              ? PlaybackStates.Playing
++              : PlaybackStates.Paused,
++      }));
++
++      if ((status.didJustFinish && controlsState === ControlStates.Hidden) ||
++        (status.isBuffering && controlsState === ControlStates.Hidden && initialShow)) {
++        animationToggle();
++        initialShow = false;
++      }
++    } else if (!status.isLoaded && status.error) {
++      const errorMsg = `Encountered a fatal error during playback: ${status.error}`;
++      setErrorMessage(errorMsg);
++      errorCallback({ type: ErrorSeverity.Fatal, message: errorMsg, obj: {} });
++    }
++  };
++
++  const togglePlay = async () => {
++    if (controlsState === ControlStates.Hidden) return;
++
++    const shouldPlay = playbackInstanceInfo.state !== PlaybackStates.Playing;
++
++    if (playbackInstance) {
++      await playbackInstance.setStatusAsync({
++        shouldPlay,
++        ...(playbackInstanceInfo.state === PlaybackStates.Ended && { positionMillis: 0 }),
++      });
++      setPlaybackInstanceInfo(prev => ({
++        ...prev,
++        state: shouldPlay ? PlaybackStates.Playing : PlaybackStates.Paused,
++      }));
++
++      if (shouldPlay) animationToggle();
++    }
++  };
++
++  if (playbackInstanceInfo.state === PlaybackStates.Error) {
++    return (
++      <View style={{
++        backgroundColor: style.videoBackgroundColor,
++        width: videoWidth,
++        height: videoHeight,
++      }}>
++        <ErrorMessage style={textStyle} message={errorMessage} />
++      </View>
++    );
++  }
++
++  if (playbackInstanceInfo.state === PlaybackStates.Loading) {
++    return (
++      <View style={{
++        backgroundColor: style.controlsBackgroundColor,
++        width: videoWidth,
++        height: videoHeight,
++        justifyContent: 'center',
++      }}>
++        {icon.loading || <ActivityIndicator {...activityIndicator} />}
++      </View>
++    );
++  }
++
++  return (
++    <View style={{
++      backgroundColor: style.videoBackgroundColor,
++      width: videoWidth,
++      height: videoHeight,
++      maxWidth: '100%',
++    }}>
++      <Video
++        style={styles.videoWrapper}
++        {...videoProps}
++        ref={component => {
++          playbackInstance = component;
++          if (videoProps.ref) {
++            videoProps.ref.current = component;
++          }
++        }}
++        onPlaybackStatusUpdate={updatePlaybackCallback}
++      />
+ 
+       <Animated.View pointerEvents={controlsState === ControlStates.Visible ? 'auto' : 'none'} style={[
+-            styles.topInfoWrapper,
+-            {
+-                opacity: controlsOpacity,
+-            },
+-        ]}>
++        styles.topInfoWrapper,
++        { opacity: controlsOpacity },
++      ]}>
+         {header}
+       </Animated.View>
+ 
+       <TouchableWithoutFeedback onPress={animationToggle}>
+-        <Animated.View style={Object.assign(Object.assign({}, StyleSheet.absoluteFillObject), { opacity: controlsOpacity, justifyContent: 'center', alignItems: 'center' })}>
+-          <View style={Object.assign(Object.assign({}, StyleSheet.absoluteFillObject), { backgroundColor: props.style.controlsBackgroundColor, opacity: 0.5 })}/>
++        <Animated.View style={{
++          ...StyleSheet.absoluteFillObject,
++          opacity: controlsOpacity,
++          justifyContent: 'center',
++          alignItems: 'center',
++        }}>
++          <View style={{
++            ...StyleSheet.absoluteFillObject,
++            backgroundColor: style.controlsBackgroundColor,
++            opacity: 0.5,
++          }} />
+           <View pointerEvents={controlsState === ControlStates.Visible ? 'auto' : 'none'}>
+             <View style={styles.iconWrapper}>
+               <TouchableButton onPress={togglePlay}>
+                 <View>
+-                  {playbackInstanceInfo.state === PlaybackStates.Buffering &&
+-            (props.icon.loading || <ActivityIndicator {...props.activityIndicator}/>)}
+-                  {playbackInstanceInfo.state === PlaybackStates.Playing && props.icon.pause}
+-                  {playbackInstanceInfo.state === PlaybackStates.Paused && props.icon.play}
+-                  {playbackInstanceInfo.state === PlaybackStates.Ended && props.icon.replay}
+-                  {((playbackInstanceInfo.state === PlaybackStates.Ended && !props.icon.replay) ||
+-            (playbackInstanceInfo.state === PlaybackStates.Playing && !props.icon.pause) ||
+-            (playbackInstanceInfo.state === PlaybackStates.Paused &&
+-                !props.icon.pause)) && (<MaterialIcons name={playbackInstanceInfo.state === PlaybackStates.Playing
+-                ? 'pause'
+-                : playbackInstanceInfo.state === PlaybackStates.Paused
+-                    ? 'play-arrow'
+-                    : 'replay'} style={props.icon.style} size={props.icon.size} color={props.icon.color}/>)}
++                  {playbackInstanceInfo.state === PlaybackStates.Buffering && (icon.loading || <ActivityIndicator {...activityIndicator} />)}
++                  {playbackInstanceInfo.state === PlaybackStates.Playing && icon.pause}
++                  {playbackInstanceInfo.state === PlaybackStates.Paused && icon.play}
++                  {playbackInstanceInfo.state === PlaybackStates.Ended && icon.replay}
++                  {((playbackInstanceInfo.state === PlaybackStates.Ended && !icon.replay) ||
++                    (playbackInstanceInfo.state === PlaybackStates.Playing && !icon.pause) ||
++                    (playbackInstanceInfo.state === PlaybackStates.Paused && !icon.pause)) && (
++                      <MaterialIcons
++                        name={playbackInstanceInfo.state === PlaybackStates.Playing
++                          ? 'pause'
++                          : playbackInstanceInfo.state === PlaybackStates.Ended
++                            ? 'replay'
++                            : 'play-arrow'}
++                        size={icon.size}
++                        color={icon.color}
++                        style={icon.style}
++                      />
++                    )}
+                 </View>
+               </TouchableButton>
+             </View>
++            {timeVisible && (
++              <Text style={textStyle}>
++                {getMinutesSecondsFromMilliseconds(playbackInstanceInfo.position)}/{getMinutesSecondsFromMilliseconds(playbackInstanceInfo.duration)}
++              </Text>
++            )}
++            {slider.visible && (
++              <Slider
++                {...sliderProps}
++                ref={sliderRef}
++                minimumValue={0}
++                maximumValue={playbackInstanceInfo.duration}
++                value={playbackInstanceInfo.position}
++                onValueChange={async (value) => {
++                  if (playbackInstance) {
++                    await playbackInstance.setStatusAsync({ positionMillis: value });
++                  }
++                }}
++              />
++            )}
+           </View>
+         </Animated.View>
+       </TouchableWithoutFeedback>
+-
+-      <Animated.View pointerEvents={controlsState === ControlStates.Visible ? 'auto' : 'none'} style={[
+-            styles.bottomInfoWrapper,
+-            {
+-                opacity: controlsOpacity,
+-            },
+-        ]}>
+-        {props.timeVisible && (<Text style={[props.textStyle, styles.timeLeft]}>
+-            {getMinutesSecondsFromMilliseconds(playbackInstanceInfo.position)}
+-          </Text>)}
+-        {props.slider.visible && (<Slider {...sliderProps} style={[styles.slider, props.slider.style]} value={playbackInstanceInfo.duration
+-                ? playbackInstanceInfo.position / playbackInstanceInfo.duration
+-                : 0} onSlidingStart={() => {
+-                if (playbackInstanceInfo.state === PlaybackStates.Playing) {
+-                    togglePlay();
+-                    setPlaybackInstanceInfo(Object.assign(Object.assign({}, playbackInstanceInfo), { state: PlaybackStates.Paused }));
+-                }
+-            }} onSlidingComplete={(e) => __awaiter(void 0, void 0, void 0, function* () {
+-                const position = e * playbackInstanceInfo.duration;
+-                if (playbackInstance) {
+-                    yield playbackInstance.setStatusAsync({
+-                        positionMillis: position,
+-                        shouldPlay: true,
+-                    });
+-                }
+-                setPlaybackInstanceInfo(Object.assign(Object.assign({}, playbackInstanceInfo), { position }));
+-            })}/>)}
+-        {props.timeVisible && (<Text style={[props.textStyle, styles.timeRight]}>
+-            {getMinutesSecondsFromMilliseconds(playbackInstanceInfo.duration)}
+-          </Text>)}
+-        {props.mute.visible && (<TouchableButton onPress={() => { var _a, _b, _c, _d; return (props.mute.isMute ? (_b = (_a = props.mute).exitMute) === null || _b === void 0 ? void 0 : _b.call(_a) : (_d = (_c = props.mute).enterMute) === null || _d === void 0 ? void 0 : _d.call(_c)); }}>
+-            <View>
+-              {props.icon.mute}
+-              {props.icon.exitMute}
+-              {((!props.icon.mute && props.mute.isMute) ||
+-                (!props.icon.exitMute && !props.mute.isMute)) && (<MaterialIcons name={props.mute.isMute ? 'volume-up' : 'volume-off'} style={props.icon.style} size={props.icon.size / 2} color={props.icon.color}/>)}
+-            </View>
+-          </TouchableButton>)}
+-        {props.fullscreen.visible && (<TouchableButton onPress={() => props.fullscreen.inFullscreen
+-                ? props.fullscreen.exitFullscreen()
+-                : props.fullscreen.enterFullscreen()}>
+-            <View>
+-              {!props.fullscreen.inFullscreen && props.icon.fullscreen}
+-              {props.fullscreen.inFullscreen && props.icon.exitFullscreen}
+-              {((!props.icon.fullscreen && !props.fullscreen.inFullscreen) ||
+-                (!props.icon.exitFullscreen && props.fullscreen.inFullscreen)) && (<MaterialIcons name={props.fullscreen.inFullscreen ? 'fullscreen-exit' : 'fullscreen'} style={props.icon.style} size={props.icon.size / 2} color={props.icon.color}/>)}
+-            </View>
+-          </TouchableButton>)}
+-      </Animated.View>
+-    </View>);
++    </View>
++  );
+ };
+-VideoPlayer.defaultProps = defaultProps;
++
+ export default VideoPlayer;
+diff --git a/node_modules/expo-video-player/dist/props.d.ts b/node_modules/expo-video-player/dist/props.d.ts
+index a5b482a..1fbeafe 100644
+--- a/node_modules/expo-video-player/dist/props.d.ts
++++ b/node_modules/expo-video-player/dist/props.d.ts
+@@ -1,38 +1,103 @@
++// import { AVPlaybackStatus, Video, VideoProps } from 'expo-av';
++// import { ActivityIndicatorProps, TextStyle } from 'react-native';
++// import { ColorValue } from 'react-native';
++// import { ErrorType } from './constants';
++// import { MutableRefObject, ReactNode } from 'react';
++// import { SliderProps } from '@react-native-community/slider';
++// export declare type Props = RequiredProps & DefaultProps;
++// export declare const defaultProps: DefaultProps;
++// declare type RequiredProps = {
++//     videoProps: VideoProps & {
++//         ref?: MutableRefObject<Video>;
++//     };
++// };
++// declare type DefaultProps = {
++//     errorCallback: (error: ErrorType) => void;
++//     playbackCallback: (status: AVPlaybackStatus) => void;
++//     defaultControlsVisible: boolean;
++//     timeVisible: boolean;
++//     textStyle: TextStyle;
++//     slider: {
++//         visible?: boolean;
++//     } & SliderProps;
++//     activityIndicator: ActivityIndicatorProps;
++//     animation: {
++//         fadeInDuration?: number;
++//         fadeOutDuration?: number;
++//     };
++//     header: ReactNode;
++//     style: {
++//         width?: number;
++//         height?: number;
++//         videoBackgroundColor?: ColorValue;
++//         controlsBackgroundColor?: ColorValue;
++//     };
++//     icon: {
++//         size?: number;
++//         color?: ColorValue;
++//         style?: TextStyle;
++//         pause?: JSX.Element;
++//         play?: JSX.Element;
++//         replay?: JSX.Element;
++//         loading?: JSX.Element;
++//         fullscreen?: JSX.Element;
++//         exitFullscreen?: JSX.Element;
++//         mute?: JSX.Element;
++//         exitMute?: JSX.Element;
++//     };
++//     fullscreen: {
++//         enterFullscreen?: () => void;
++//         exitFullscreen?: () => void;
++//         inFullscreen?: boolean;
++//         visible?: boolean;
++//     };
++//     autoHidePlayer: boolean;
++//     mute: {
++//         enterMute?: () => void;
++//         exitMute?: () => void;
++//         isMute?: boolean;
++//         visible?: boolean;
++//     };
++// };
++// export {};
++
+ import { AVPlaybackStatus, Video, VideoProps } from 'expo-av';
+-import { ActivityIndicatorProps, TextStyle } from 'react-native';
+-import { ColorValue } from 'react-native';
++import { ActivityIndicatorProps, TextStyle, ColorValue } from 'react-native';
+ import { ErrorType } from './constants';
+ import { MutableRefObject, ReactNode } from 'react';
+ import { SliderProps } from '@react-native-community/slider';
+-export declare type Props = RequiredProps & DefaultProps;
+-export declare const defaultProps: DefaultProps;
+-declare type RequiredProps = {
++
++// Required and Default Props Types
++export type Props = RequiredProps & DefaultProps;
++
++type RequiredProps = {
+     videoProps: VideoProps & {
+         ref?: MutableRefObject<Video>;
+     };
+ };
+-declare type DefaultProps = {
+-    errorCallback: (error: ErrorType) => void;
+-    playbackCallback: (status: AVPlaybackStatus) => void;
+-    defaultControlsVisible: boolean;
+-    timeVisible: boolean;
+-    textStyle: TextStyle;
+-    slider: {
++
++type DefaultProps = {
++    errorCallback?: (error: ErrorType) => void;
++    playbackCallback?: (status: AVPlaybackStatus) => void;
++    defaultControlsVisible?: boolean;
++    timeVisible?: boolean;
++    textStyle?: TextStyle;
++    slider?: {
+         visible?: boolean;
+     } & SliderProps;
+-    activityIndicator: ActivityIndicatorProps;
+-    animation: {
++    activityIndicator?: ActivityIndicatorProps;
++    animation?: {
+         fadeInDuration?: number;
+         fadeOutDuration?: number;
+     };
+-    header: ReactNode;
+-    style: {
++    header?: ReactNode;
++    style?: {
+         width?: number;
+         height?: number;
+         videoBackgroundColor?: ColorValue;
+         controlsBackgroundColor?: ColorValue;
+     };
+-    icon: {
++    icon?: {
+         size?: number;
+         color?: ColorValue;
+         style?: TextStyle;
+@@ -45,18 +110,65 @@ declare type DefaultProps = {
+         mute?: JSX.Element;
+         exitMute?: JSX.Element;
+     };
+-    fullscreen: {
++    fullscreen?: {
+         enterFullscreen?: () => void;
+         exitFullscreen?: () => void;
+         inFullscreen?: boolean;
+         visible?: boolean;
+     };
+-    autoHidePlayer: boolean;
+-    mute: {
++    autoHidePlayer?: boolean;
++    mute?: {
+         enterMute?: () => void;
+         exitMute?: () => void;
+         isMute?: boolean;
+         visible?: boolean;
+     };
+ };
+-export {};
++
++// VideoPlayer Component
++const VideoPlayer = ({
++    videoProps,
++    errorCallback = (error: ErrorType) => console.error(error),
++    playbackCallback = (status: AVPlaybackStatus) => console.log(status),
++    defaultControlsVisible = true,
++    timeVisible = true,
++    textStyle = {},
++    slider = { visible: true },
++    activityIndicator = {},
++    animation = { fadeInDuration: 300, fadeOutDuration: 300 },
++    header = null,
++    style = { width: '100%', height: 300, videoBackgroundColor: '#000', controlsBackgroundColor: '#fff' },
++    icon = {
++        size: 24,
++        color: '#000',
++        style: {},
++        pause: null,
++        play: null,
++        replay: null,
++        loading: null,
++        fullscreen: null,
++        exitFullscreen: null,
++        mute: null,
++        exitMute: null,
++    },
++    fullscreen = {
++        enterFullscreen: () => {},
++        exitFullscreen: () => {},
++        inFullscreen: false,
++        visible: true,
++    },
++    autoHidePlayer = true,
++    mute = {
++        enterMute: () => {},
++        exitMute: () => {},
++        isMute: false,
++        visible: true,
++    },
++}: Props): JSX.Element => {
++    // Component logic goes here
++
++   
++};
++
++export default VideoPlayer;
++
